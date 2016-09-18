@@ -3,11 +3,6 @@
 import sys
 import time
 import math
-from matplotlib import pyplot
-from pylab import *
-import numpy
-from numpy import arange
-import skrf as rf
 from hp8510c import *
 
 def main():
@@ -23,14 +18,10 @@ def main():
 	vna.write("S11;FORM4;WAIT;WAIT;WAIT;WAIT;");
 	time.sleep(4)
 	res = vna.cmd("OUTPDATA;");
-	t_data = numpy.linspace(0.0, len(res) * 0.5, len(res));
-	c_data = []
 	s11 = []
 	s12 = []
 	s21 = []
 	s22 = []
-	pyplot.axes(frameon = 0, aspect = 1, polar = 0)
-	pyplot.grid(True)
 	idx = 0
 	for c_0_s in res:
 		c_1 = c_0_s.split(',')
