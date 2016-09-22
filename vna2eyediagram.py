@@ -25,6 +25,7 @@ def main():
 	vna.write("S11;FORM4;WAIT;WAIT;WAIT;WAIT;");
 	time.sleep(4)
 	res = vna.cmd("OUTPDATA;");
+	zero_pad = [ 0 for i in range(1024 - 801)];
 	s11 = []
 	s12 = []
 	s21 = []
@@ -64,15 +65,13 @@ def main():
 	i = 0
 	toplot = [];
 	freq = [];
-	td = numpy.fft.ifft(s11)	
-	for i in range(len(td)):
-		toplot.append(abs(td[i]))
-		freq.append(1.0/(float(start) + i * diff))
+	t_ = 0;
+	td = numpy.fft.ifft(numpy.fft.fftshift(s11))
+	
+	toplot = [ abs(c) for c in td ]
 	pyplot.plot(toplot)
-	toplot = []
-	td = numpy.fft.ifft(s22)	
-	for i in range(len(td)):
-		toplot.append(abs(td[i]))
+	td = numpy.fft.ifft(numpy.fft.fftshift(s22))
+	toplot = [ abs(c) for c in td ]
 	pyplot.plot(toplot);
 	show();	
 if __name__ == "__main__":
